@@ -1,0 +1,65 @@
+<body>
+   <div id="root"></div>
+   <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+   <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+   <style>
+      body{
+         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+   </style>
+   <script type="text/babel">
+      // Ni los componentes padres o hijos pueden saber si un determinado componente 
+      // tiene o no tiene estado y no les debería importar si se define como una función o una clase.
+      // Por eso es que el estado a menudo se le denomina local o encapsulado. No es accesible desde 
+      // otro componente excepto de aquel que lo posee y lo asigna.
+      
+      // El ComponenteHijo recibiría nombrePadre en sus props y no sabría si vino del estado de 
+      // ComponentePadre, de los props de ComponentePadre, o si se escribió manualmente:
+      class ComponenteHijo extends React.Component {
+         constructor(props){
+            super(props)
+            this.state = {
+               nombre: 'Sara',
+               date: new Date()
+            }
+         }
+         
+         render(){
+            return (
+            <div>
+               <h2>Hola soy {this.state.nombre} mi padre es {this.props.nombrePadre}</h2>
+            </div>
+            );
+         }
+      }
+      
+      // Un componente puede elegir pasar su estado como props a sus componentes hijos:
+      class ComponentePadre extends React.Component {
+         constructor(props){
+            super(props)
+            this.state = {
+               nombre: 'Joe',
+               date: new Date()
+            }
+         }
+         
+         render(){
+            return (
+            <div>
+               <h1>Hola soy {this.state.nombre} mi hijo es:</h1>
+               <ComponenteHijo nombrePadre={this.state.nombre}/>
+            </div>
+            );
+         }
+      }
+      
+      const root = ReactDOM.createRoot(document.getElementById('root'))
+      const element = (
+      <div>
+         <ComponentePadre />
+      </div>
+      );
+      root.render(element)
+   </script>
+</body>

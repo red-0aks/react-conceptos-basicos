@@ -1,0 +1,73 @@
+<body>
+   <div id="root"></div>
+   <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+   <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+   <style>
+      body{
+         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+   </style>
+   <script type="text/babel">
+      const root = ReactDOM.createRoot(document.getElementById('root'));
+      // En esta sección, aprenderemos como hacer al componente Clock verdaderamente 
+      // reutilizable y encapsulado. Configurarás tu propio temporizador y se actualizará cada segundo.
+      
+      // El método render se invocará cada vez que ocurre una actualización; 
+      // pero, siempre y cuando rendericemos <Clock /> en el mismo nodo del DOM, 
+      // se usará solo una única instancia de la clase Clock. Esto nos permite 
+      // utilizar características adicionales como el estado local y los métodos de ciclo de vida.
+      class Clock extends React.Component {
+         // El constructor de clase asigna el this.state inicial.
+         // El único lugar donde puedes asignar this.state es el constructor.
+         constructor(props) {
+            super(props)
+            this.state = {
+               date: new Date()
+            }
+         }
+         
+         // Podemos declarar métodos especiales en la clase del componente 
+         // para ejecutar algún código cuando un componente se monta y desmonta
+         // Estos métodos son llamados «métodos de ciclo de vida».
+         
+         // El método componentDidMount() se ejecuta después que la salida del componente 
+         // ha sido renderizada en el DOM. Este es un buen lugar para configurar un temporizador:
+         componentDidMount(){
+            this.timerID = setInterval(
+               () => this.tick(), 
+               1000
+            );
+         }
+         
+         // Eliminaremos el temporizador en el método de ciclo de vida componentWillUnmount():
+         componentWillUnmount(){
+            clearInterval(this.timerID)
+         }
+         
+         // Finalmente, implementaremos un método llamado tick() que el componente Clock ejecutará cada segundo.
+         // Utilizará this.setState() para programar actualizaciones al estado local del componente.
+         // No modificar el estado directamente: this.state.comment = 'Hello';
+         // En su lugar utilizar setState()
+         tick(){
+            this.setState({
+               date: new Date()
+            })
+         }
+         
+         // Reemplazar this.props.date con this.state.date 
+         // en el método render() para acceder al estado
+         render(){
+            return (
+            <div>
+               <h1>Clock Component</h1>
+               <h2>It is {this.state.date.toLocaleTimeString()}</h2>
+            </div>
+            );
+         }
+      }
+      
+      root.render(<Clock/>);    
+      
+   </script>
+</body>

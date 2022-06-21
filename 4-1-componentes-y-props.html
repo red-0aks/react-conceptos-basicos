@@ -1,0 +1,38 @@
+<body>
+   <div id="root"></div>
+   <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+   <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+   <style>
+      body{
+         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+   </style>
+   <script type="text/babel">
+      const root = ReactDOM.createRoot(document.getElementById('root'))
+      // Conceptualmente, los componentes son como las funciones de JavaScript. 
+      // Aceptan entradas arbitrarias (llamadas “props”) y retornan elementos de React 
+      // que describen lo que debe aparecer en la pantalla.  
+      
+      // Componente funcional. la primera forma de definir un componente es usando funcion de javascript.
+      function FunctionComponent(props) {
+         return <h1>Hello, {props.name}</h1>;
+      }
+      
+      // Componente de clase. otra forma de definir componentes usando clases de ES6.
+      class ClassComponent extends React.Component {
+         render() {
+            return <h1>Hello, {this.props.name}</h1>;
+         }
+      }
+      
+      const element =
+      <div>
+         <FunctionComponent name="Sara" />
+         <ClassComponent name="Joel" />
+      </div>
+      
+      console.log(element.props.children[0].props)
+      root.render(element);
+   </script>
+</body>

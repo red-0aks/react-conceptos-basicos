@@ -1,0 +1,55 @@
+<body>
+   <div id="root"></div>
+   <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+   <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+   <style>
+      body{
+         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+   </style>
+   <script type="text/babel">
+      const rootElement = ReactDOM.createRoot(document.getElementById('root'))
+      
+      // Otro método para el renderizado condicional de elementos en una línea es usar 
+      // el operador condicional condición ? true : false de JavaScript.
+      class LoginComponent extends React.Component{
+         render() {
+            const isLoggedIn = this.props.isLoggedIn;
+            return (
+               <div>
+                  The user is <b>{isLoggedIn ? 'currently' : 'not'}</b> logged in.
+               </div>
+            );
+         }
+      }
+
+      // También puede usarse para expresiones más grandes, aunque es menos obvio lo que está pasando:
+      class LoginComponent2 extends React.Component {
+         render() {
+         const isLoggedIn = this.props.isLoggedIn;
+         return (
+            <div>
+               The second user is 
+               <b>
+                  {isLoggedIn
+                     ? ' currently ' 
+                     : ' not '
+                  }
+               </b>
+               logged in.
+            </div>
+         );
+      }
+      }
+      
+      const element = (
+         <div>
+            <LoginComponent />
+            <LoginComponent2 isLoggedIn={true}/>
+         </div>
+      );
+      
+      rootElement.render(element)
+   </script>
+</body>

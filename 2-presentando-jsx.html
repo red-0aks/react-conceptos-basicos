@@ -1,0 +1,49 @@
+<body>
+   <div id="root"></div>
+   <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+   <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+   <style>
+      body{
+         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      .blueText{
+         color: #0095ff;
+      }
+   </style>
+   <script type="text/babel">
+      // Babel compila JSX a llamadas de React.createElement().
+      const user = {
+         name: 'Francisco',
+         lastName: 'Sepulveda'
+      }
+      
+      const formatName = user => {
+         return `${user.name} ${user.lastName}`
+      }
+      
+      // Se puede usar JSX dentro de declaraciones if, for, etc...
+      function getGreeting(user){
+         if(user){
+            return <h1>Hello, {formatName(user)}</h1>
+         }
+         return <h1>Hello, stranger</h1>
+      }
+      
+      const blueTxt = 'blueText'
+      
+      // Para agregar expresiones se usa la interpolacion con {}
+      // Tambien se pueden agregar llamadas a funciones dentro de {}
+      // Los valores de atributos tambien aceptan la interpolacion {}
+      const element = (
+      <div>
+         <h1>Hello, <span className={blueTxt}>{user.name}</span></h1>
+         {getGreeting(user)}
+         {getGreeting()}
+      </div>
+      )
+      ReactDOM
+      .createRoot(document.getElementById('root'))
+      .render(element)
+   </script>
+</body>

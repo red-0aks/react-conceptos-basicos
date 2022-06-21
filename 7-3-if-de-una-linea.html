@@ -1,0 +1,59 @@
+<body>
+   <div id="root"></div>
+   <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+   <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+   <style>
+      body{
+         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+   </style>
+   <script type="text/babel">
+      const rootElement = ReactDOM.createRoot(document.getElementById('root'))
+      
+      // Puedes incluir expresiones en JSX envolviéndolas en llaves. Esto incluye el operador 
+      // lógico && de JavaScript. Puede ser útil para incluir condicionalmente un elemento:
+      function Mailbox(props) {
+         const unreadMessages = props.unreadMessages;
+         return (
+            <div>
+               <h1>Hello!</h1>
+               {unreadMessages.length > 0 &&
+                  <h2>
+                     You have {unreadMessages.length} unread messages.
+                  </h2>
+               }
+            </div>
+         );
+      }
+      // Esto funciona porque en JavaScript, "true && expresión" siempre evalúa a expresión, 
+      // y "false && expresión" siempre evalúa a false. Por eso, si la condición es true, 
+      // el elemento justo después de && aparecerá en el resultado. Si es false, React lo ignorará.
+
+
+      // Ten en cuenta que retornar expresiones falsas hará que el elemento después de ’&&’ 
+      // sea omitido pero retornará el valor falso. En el ejemplo de abajo, "0" será retornado 
+      // por el método de renderizado.
+      class Count extends React.Component {
+         render() {
+            const count = 0;
+            return (
+               <div>
+                  {count && <h1>Messages: {count}</h1>}
+               </div>
+            );
+         }
+      }
+
+      const  messages = ['react', 're:react', 're:re: react']
+      
+      const element = (
+         <div>
+            <Mailbox unreadMessages={messages}/>
+            <Count/>
+         </div>
+      );
+      
+      rootElement.render(element)
+   </script>
+</body>

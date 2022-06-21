@@ -1,0 +1,76 @@
+<body>
+   <div id="root"></div>
+   <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+   <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+   <style>
+      body{
+         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+   </style>
+   <script type="text/babel">
+      const root = ReactDOM.createRoot(
+         document.getElementById('root')
+      );
+      // Objeto con las propiedades que se pasaran a los componentes.
+      const props = {
+         author: {
+            name: 'Francisco',
+            lastName: 'Sepulveda',
+            avatarUrl: '/img/react.svg',
+         },
+         text: 'This is a user comment',
+         date: new Date().toLocaleTimeString()
+         
+      }
+      
+      // Componente funcional "Avatar"
+      // Avatar no necesita saber que está siendo renderizado dentro de UserInfo. 
+      // Esto es por lo que le dimos a su propiedad un nombre más genérico: user en vez de author.
+      function Avatar(props){
+         return (
+            <img 
+               className="Avatar"
+               src={props.user.avatarUrl} 
+               alt={props.user.name}
+            />
+         );
+      }
+      
+      // Componente funcional "UserInfo", este componente
+      // renderiza dentro al componente "Avatar"
+      function UserInfo(props){
+         return (
+         <div className="UserInfo">
+            <Avatar user={props.user}/>
+            <div className="UserInfo-name">
+               {props.user.name}
+            </div>
+         </div>
+         );
+      }
+      
+      // Componente funcional "Comment", este componente
+      // renderiza dentro al componente "UserInfo"
+      function Comment(props){
+         return (
+         <div className="Comment">
+            <UserInfo user={props.author}/>
+            <div className="Comment-text">
+               {props.text}
+            </div>
+            <div className="Comment-date">
+               {props.date}
+            </div>
+         </div>
+         );
+      }
+      
+      const element = 
+      <div>
+         <Comment {...props}/>
+      </div>
+      
+      root.render(element);
+   </script>
+</body>

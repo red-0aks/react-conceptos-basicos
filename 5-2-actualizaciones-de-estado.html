@@ -1,0 +1,56 @@
+<body>
+   <div id="root"></div>
+   <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+   <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+   <style>
+      body{
+         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+   </style>
+   <script type="text/babel">
+      // 1. LAS ACTUALIZACIONES DEL ESTADO PUEDEN SER ASÍNCRONAS
+      // this.props y this.state pueden actualizarse de forma asincrónica, 
+      // no debes confiar en sus valores para calcular el siguiente estado.
+      // INCORRECTO
+      this.setState({
+         counter: this.state.counter + this.props.increment,
+      });
+         
+      // Para arreglarlo, usa una segunda forma de setState() que acepta una función 
+      // en lugar de un objeto. Esa función recibirá el estado previo como primer argumento, 
+      // y las props en el momento en que se aplica la actualización como segundo argumento:
+      // CORRECTO
+      this.setState((state, props) => ({
+         counter: state.counter + props.increment
+      }));
+      
+      // 2. LAS ACTUALIZACIONES DE ESTADO SE FUSIONAN
+      // Cuando invocas a setState(), React combina el objeto que proporcionaste con el estado actual.
+      // Por ejemplo, tu estado puede contener varias variables independientes:
+      constructor(props) {
+         super(props);
+         this.state = {
+            posts: [],
+            comments: []
+         };
+      }
+      
+      // Luego puedes actualizarlas independientemente con invocaciones separadas a setState():
+      // La fusión es superficial, asi que this.setState({comments}) deja intacto a this.state.posts, 
+      // pero reemplaza completamente this.state.comments.
+      componentDidMount() {
+         fetchPosts().then(response => {
+            this.setState({
+               posts: response.posts
+            });
+         });
+         
+         fetchComments().then(response => {
+            this.setState({
+               comments: response.comments
+            });
+         });
+      }
+   </script>
+</body>

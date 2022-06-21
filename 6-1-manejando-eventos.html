@@ -1,0 +1,77 @@
+<body>
+   <div id="root"></div>
+   <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+   <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+   <style>
+      body{
+         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+   </style>
+   <script type="text/babel">
+         const root = ReactDOM.createRoot(document.getElementById('root'))
+
+         // En React no puedes retornar false para prevenir el comportamiento por defecto. 
+         // Debes, explícitamente, llamar preventDefault.
+         function Form() {
+               function handleSubmit(e) {
+                  e.preventDefault();
+                  console.log('You clicked submit.');
+               }
+
+               return (
+                  <form onSubmit={handleSubmit}>
+                     <button type="submit">Submit</button>
+                  </form>
+               );
+         }
+
+         // Los eventos de React se nombran usando camelCase, en vez de minúsculas.
+         // Con JSX pasas una función como el manejador del evento, en vez de un string.
+         /* const example = (
+               <button onClick={activateLasers}>
+                  Activate Lasers
+               </button>
+         ); */
+         
+         // Cuando estás utilizando React, generalmente no necesitas llamar addEventListener para agregar 
+         // escuchadores de eventos a un elemento del DOM después de que este es creado. En cambio, solo 
+         // debes proveer un manejador de eventos cuando el elemento se renderiza inicialmente.
+
+         // Cuando defines un componente usando una clase de ES6, un patrón muy común es que los manejadores de 
+         // eventos sean un método de la clase. Por ejemplo, este componente Toggle renderiza un botón que 
+         // permite al usuario cambiar el estado entre “ENCENDIDO” y “APAGADO”:
+         class Toggle extends React.Component {
+               constructor(props) {
+                  super(props);
+                  this.state = {isToggleOn: true};
+
+                  // Este enlace es necesario para hacer que `this` funcione en el callback
+                  // Tienes que tener mucho cuidado en cuanto al significado de this en los callbacks de JSX. 
+                  // En JavaScript, los métodos de clase no están ligados por defecto. Si olvidas ligar 
+                  // this.handleClick y lo pasas a onClick, this será undefined cuando se llame la función.
+                  this.handleClick = this.handleClick.bind(this);
+               }
+
+               handleClick() {
+                  this.setState(prevState => ({
+                     isToggleOn: !prevState.isToggleOn
+                  }));
+               }
+
+               render() {
+                  return (
+                     <button onClick={this.handleClick}>
+                           {this.state.isToggleOn ? 'ON' : 'OFF'}
+                     </button>  
+                  );
+               }
+         }
+
+         const element = (
+            <Toggle/>
+         ); 
+         
+         root.render(element)
+   </script>
+</body>
